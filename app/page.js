@@ -6,7 +6,7 @@ import movies from '@/data/movies.json';
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [currentPage, setCurrentPage] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
   const moviesPerPage = 12;
 
   const filteredMovies = movies.filter(m =>
@@ -29,12 +29,12 @@ export default function Home() {
       />
 
       <div>
-        {currentMovies.map(m => {
+        {currentMovies.map(m => 
           <MovieCard 
             key={m.id}
             movie={m}
           />
-        })}
+        )}
       </div>
 
       {currentMovies.length < filteredMovies.length && (
