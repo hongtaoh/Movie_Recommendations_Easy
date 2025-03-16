@@ -76,9 +76,9 @@ export default function RecommendPage() {
             </div>
           )}
 
-          {results.movies?.length > 0 ? (
+        {results.movies? (
             <div>
-                {results.map(m => 
+                {results.qdrantResults.map(m => 
                 <MovieCard 
                     key={m.id}
                     movie={m}

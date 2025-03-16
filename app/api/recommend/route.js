@@ -1,7 +1,6 @@
 // app/api/recommend/route.js 
 
 import { NextResponse } from "next/server";
-import movies from '@/data/movies.json';
 import { getGeminiEmbedding } from "@/lib/geminiEmbedding";
 import { qdrantSearch } from "@/lib/qdrant";
 import { generateExplanation } from "@/lib/explain";
@@ -24,7 +23,7 @@ export async function POST(req) {
         const explanation = await generateExplanation(query, qdrantResults, model)
         console.log(explanation)
 
-        return NextResponse.json({ qdrantResults, explanation})
+        return NextResponse.json({ movies: qdrantResults, explanation})
     } catch (error) {
         return NextResponse.json(
           { error: error.message || "Recommendation failed" },
