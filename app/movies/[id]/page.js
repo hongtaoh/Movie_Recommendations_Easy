@@ -1,6 +1,7 @@
 // app/movies/[id]/page.js
 
 import movies from '@/data/movies.json'
+import Image from 'next/image';
 
 export default async function MoviePage({ params }) {
     // Await the params to resolve the async value
@@ -14,11 +15,14 @@ export default async function MoviePage({ params }) {
             <div className='bg-white rounded-xl shadow-sm'>
                 <div className='grid md:grid-cols-2 gap-8 p-6'>
                     <div className='flex justify-center'>
-                        <img 
-                            src={posterURL}
-                            alt={movie.title}
-                            className='w-64 h-96 object-cover rounded-lg'
-                        />
+                    <Image 
+                        src={posterURL}
+                        alt={movie.title}
+                        width={256} // Set explicit width (matches w-64 in Tailwind)
+                        height={384} // Set explicit height (matches h-96 in Tailwind)
+                        className='object-cover rounded-lg'
+                        priority // Optional: Prioritize loading for LCP
+                    />
                     </div>
                     <div className='space-y-4'>
                         <h1 className='text-3xl font-bold'>{movie.title}</h1>

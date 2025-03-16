@@ -1,6 +1,8 @@
 // components/MovieCard.js
 'use client';
 import Link from 'next/link';
+import Image from 'next/image';
+
 
 const MovieCard = ({movie}) => {
     const posterURL = `https://image.tmdb.org/t/p/w92${movie.poster_path}`;
@@ -11,7 +13,9 @@ const MovieCard = ({movie}) => {
             <img 
                 src={posterURL}
                 alt={movie.title}
-                className='w-16 h-24 object-cover rounded'
+                width={64}
+                height={96}
+                className='object-cover rounded'
             />
 
             {/* Text Content */}
