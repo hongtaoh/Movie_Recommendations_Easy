@@ -2,6 +2,7 @@
 'use client';
 import { useState } from 'react';
 import MovieCard from '@/components/MovieCard';
+import ReactMarkdown from 'react-markdown'; 
 
 export default function RecommendPage() {
   const [query, setQuery] = useState('');
@@ -14,6 +15,7 @@ export default function RecommendPage() {
     e.preventDefault();
     setLoading(true);
     setError(null);
+    setResults(null);
 
     try {
       const response = await fetch('/api/recommend', {
@@ -35,14 +37,17 @@ export default function RecommendPage() {
   return (
     <div className="max-w-2xl mx-auto p-4">
       <form onSubmit={handleSubmit} className="mb-8 space-y-4">
-        <select
-          value={model}
-          onChange={(e) => setModel(e.target.value)}
-          className="w-full p-2 border rounded"
-        >
-          <option value="gemini">Google Gemini</option>
-          <option value="deepseek">DeepSeek</option>
-        </select>
+        <div className="space-y-1">
+            <label className="text-sm text-gray-600">Choose LLM Model:</label>
+            <select
+                value={model}
+                onChange={(e) => setModel(e.target.value)}
+                className="w-full p-2 border rounded"
+            >
+                <option value="gemini">Google Gemini</option>
+                <option value="deepseek">DeepSeek</option>
+            </select>
+        </div>
 
         <textarea
             value={query}
@@ -72,13 +77,15 @@ export default function RecommendPage() {
           {results.explanation && (
             <div className="bg-gray-50 p-4 rounded-lg">
               <h3 className="font-bold mb-2">AI Explanation:</h3>
-              <p className="whitespace-pre-wrap">{results.explanation}</p>
+              <ReactMarkdown>
+                {results.explanation}
+              </ReactMarkdown>
             </div>
           )}
 
-        {results.movies? (
+        {results.movies && results.movies.length > 0 ? (
             <div>
-                {results.qdrantResults.map(m => 
+                {results.movies.map(m => 
                 <MovieCard 
                     key={m.id}
                     movie={m}
