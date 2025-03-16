@@ -1,3 +1,5 @@
+// app/movies/random/route.js
+
 import movies from '@/data/movies.json';
 
 // Fisher-Yates shuffle algorithm

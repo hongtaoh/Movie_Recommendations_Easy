@@ -1,4 +1,5 @@
 // app/movies/[id]/route.js
+
 import { NextResponse } from 'next/server';
 import movies from '@/data/movies.json';
 
