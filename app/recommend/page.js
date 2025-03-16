@@ -78,7 +78,7 @@ export default function RecommendPage() {
 
           {results.movies?.length > 0 ? (
             <div>
-                {currentMovies.map(m => 
+                {results.map(m => 
                 <MovieCard 
                     key={m.id}
                     movie={m}

@@ -4,11 +4,11 @@ import { NextResponse } from "next/server";
 import movies from '@/data/movies.json';
 import { getGeminiEmbedding } from "@/lib/geminiEmbedding";
 import { qdrantSearch } from "@/lib/qdrant";
-import { generateExplaination } from "@/lib/explain";
+import { generateExplanation } from "@/lib/explain";
 
 export async function POST(req) {
     try {
-        const [query, model] = await req.json();
+        const {query, model} = await req.json();
 
         if (!['gemini', 'deepseek'].includes(model)) {
             return NextResponse.json(
@@ -18,10 +18,13 @@ export async function POST(req) {
         }
 
         const embedding = await getGeminiEmbedding(query);
+        console.log(embedding)
         const qdrantResults = await qdrantSearch(embedding, 5);
-        const explantion = await generateExplaination(query, qdrantResults, model)
+        console.log(qdrantResults)
+        const explanation = await generateExplanation(query, qdrantResults, model)
+        console.log(explanation)
 
-        return NextResponse.json({ movies, explantion})
+        return NextResponse.json({ qdrantResults, explanation})
     } catch (error) {
         return NextResponse.json(
           { error: error.message || "Recommendation failed" },
